@@ -7,7 +7,7 @@ do
  cd /home/giovanni/Documents/levenmar/levenmar/simulações/${i}
  cp /home/giovanni/Documents/levenmar/levenmar/dados/${i}*.dat . 
  cp /home/giovanni/Documents/levenmar/levenmar/valx.dat .
- for ii in $(seq 1 12)
+ for ii in $(seq 1.0 0.5 12.0)
  do
   mkdir spread${i}.diffusion${ii}
   for iii in $(seq 1 6)
@@ -26,9 +26,9 @@ do
    cd /home/giovanni/Documents/levenmar/levenmar/simulações/${i}
    cp /home/giovanni/Documents/levenmar/levenmar/media.py .
    ./media.py ./todasdifu${i}.${ii}.dat mediatodasdifu${i}.${ii}.dat
-   cat mediatodas* > todasmedias${i}rm.dat
-   tail -n 9 todasmedias${i}rm.dat > todasmedias${i}.dat
-   head -n 3 todasmedias${i}rm.dat >> todasmedias${i}.dat
+   cat mediatodas* > todasmedias${i}.dat
+#   tail -n 9 todasmedias${i}rm.dat > todasmedias${i}.dat
+#   head -n 3 todasmedias${i}rm.dat >> todasmedias${i}.dat
    cp /home/giovanni/Documents/levenmar/levenmar/calcymod.for .
    sed -i s/YYY/${i}.${ii}/g calcymod.for
    gfortran calcymod.for -o ymod${i}.${ii}.out
