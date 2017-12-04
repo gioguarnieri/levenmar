@@ -20,13 +20,13 @@ C	data a/2.000d-2,6.00d-7/
 c	spread = 0.00d0
 C
 C
-         OPEN (8,FILE='saida1.DAT')
-         OPEN (9,FILE='saiu1.dat')
-         OPEN (10,FILE='1.dat')
-         OPEN (11,FILE='ymod1.dat')
-         OPEN (12,FILE='findus1.txt')
-         OPEN (15,FILE='difu_LM1.dat')
-         OPEN (16,FILE='errper1.dat')
+         OPEN (8,FILE='saidaXXX.DAT')
+         OPEN (9,FILE='saiuXXX.dat')
+         OPEN (10,FILE='XXX.dat')
+         OPEN (11,FILE='ymodXXX.dat')
+         OPEN (12,FILE='findusXXX.txt')
+         OPEN (15,FILE='difu_LMXXX.dat')
+         OPEN (16,FILE='errperXXX.dat')
         iciclo = 1
         difu = 0.0d0
        dif(:)=0.0d0
@@ -36,14 +36,14 @@ C
 C      nn -> ordem do desenvolvimento da expansao em N
 C
         ndata = ncols     
-        nn=40000
+        nn=400
         do 234 k=1,ncols
          READ(10,*) x(k),y(k)
          sig(k) = 1.0d0
 234     continue
         aux=y(1)
         guess(1) = y(ncols)
-        guess(2) = 7e-7 
+        guess(2) = YYYe-7 
         lista(:)=0
 c        do 456 k=1, ncols
 c         y(k)=(y(k)-aux)/aux
@@ -56,15 +56,15 @@ c456     continue
 1       continue
        alamda=-1.0d0
       do 123 i=1,15
-      print*, chisq, alamda, i
+c      print*, chisq, alamda, i
        call mrqmin(x,y,sig,ndata,a,ma,lista,mfit,covar,alpha,nca,chisq,a
      *lamda,nn)
 123   continue
       alamda=0
        call mrqmin(x,y,sig,ndata,a,ma,lista,mfit,covar,alpha,nca,chisq,a
      *lamda,nn)
-      print*, "a1 e a2"
-      print*, a(1), a(2)
+c      print*, "a1 e a2"
+c      print*, a(1), a(2)
 
 
         do 55 k=1,ndata
@@ -89,10 +89,8 @@ c456     continue
        difu = difu+dif(1)
         sigma = sigma + (dif(1)-difu)**2
        sigma = dsqrt(((1.0d0/(dfloat(ncols)-1.0d0))*sigma))
-       write (8,*) '                      '
-       write (8,*) '                      '
-       write (8,*) 'D = ',a(2), ' +/- ', sigma, ' cm^2/min'
-       write (*,*) 'D = ',a(2), ' +/- ', sigma, ' cm^2/min'
+       write (8,*) a(1),'    ', a(2)
+c       write (*,*) 'D = ',a(2), ' +/- ', sigma, ' cm^2/min'
        write (15,*) difu, sigma
        errper = dsqrt(((a(2)-6.0d-07)/6.0d-07)**2)
        write(16,*) errper
@@ -101,7 +99,7 @@ c456     continue
       CLOSE (10)
       close(12)
       close(15)
-      write(*,*) a
+c      write(*,*) a
       stop
       end
 
@@ -127,7 +125,7 @@ C
             lista(kk)=j
             kk=kk+1
             else if(ihit.gt.1) then
-            print*, 'permutacao impropria em lista'
+c            print*, 'permutacao impropria em lista'
 		return
            endif
 12      continue
@@ -246,7 +244,7 @@ C
                   icol=k
                 endif
               else if (ipiv(k).gt.1) then
-                write(*,*) 'singular matrix in gaussj1'
+c                write(*,*) 'singular matrix in gaussj1'
 	stop
               endif
 12          continue
@@ -268,7 +266,7 @@ C
         indxr(i)=irow
         indxc(i)=icol
         if (a(icol,icol).eq.0.) then
-	write(*,*) 'singular matrix in gaussj2'
+        write(*,*) 'singular matrix in gaussj2'
 	exit
 	endif
         pivinv=1.0d0/a(icol,icol)
